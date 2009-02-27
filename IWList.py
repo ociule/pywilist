@@ -24,7 +24,9 @@ class IWList():
         # Runs iwlist and gets WiFi data in a string
         # Developped, tested with Wireless Extension v29 English translation, Nov 2007
         cstring = "iwlist " + interface + " scanning"
-        return os.popen(cstring).read()
+        # Replace = with :, if present
+        # Some iwtools versions return Quality=21/100  Signal level:-89 dBm  Noise level=-103 dBm
+        return os.popen(cstring).read().replace('=',':')
 
     def parseRawData(self, rawdata):
         # Parses a string containing the data printed by iwlist
